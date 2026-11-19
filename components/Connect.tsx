@@ -1,5 +1,6 @@
 import { ArrowUpRight, Mail, Phone } from "lucide-react";
 import InstagramIcon from "./InstagramIcon";
+import LinkedInIcon from "./LinkedInIcon";
 import SectionHeading from "./SectionHeading";
 import { revealDelay } from "@/lib/motion";
 import { siteConfig, telHref } from "@/lib/site-config";
@@ -28,7 +29,7 @@ export default function Connect() {
       external: true,
     },
     ...(social.linkedin
-      ? [{ label: "LinkedIn", value: "View profile", href: social.linkedin, icon: <ArrowUpRight size={19} strokeWidth={1.5} />, external: true }]
+      ? [{ label: "LinkedIn", value: siteConfig.name, href: social.linkedin, icon: <LinkedInIcon size={19} />, external: true }]
       : []),
     ...(contact.email
       ? [{ label: "Email", value: contact.email, href: `mailto:${contact.email}`, icon: <Mail size={19} strokeWidth={1.5} /> }]

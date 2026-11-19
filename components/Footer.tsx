@@ -1,5 +1,6 @@
 import { ArrowUp, Phone } from "lucide-react";
 import InstagramIcon from "./InstagramIcon";
+import LinkedInIcon from "./LinkedInIcon";
 import { revealDelay } from "@/lib/motion";
 import { fullLocation, navLinks, siteConfig, telHref } from "@/lib/site-config";
 
@@ -58,6 +59,20 @@ export default function Footer() {
                 <span className="sr-only">(opens in a new tab)</span>
               </a>
             </li>
+            {social.linkedin && (
+              <li>
+                <a
+                  href={social.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer me"
+                  className="link-underline inline-flex items-center gap-2.5 text-ink/80 hover:text-ink"
+                >
+                  <LinkedInIcon size={15} />
+                  LinkedIn
+                  <span className="sr-only">(opens in a new tab)</span>
+                </a>
+              </li>
+            )}
           </ul>
         </div>
       </div>

@@ -66,8 +66,7 @@ export const siteConfig = {
       url: "https://www.instagram.com/adv.manthan/",
       handle: "@adv.manthan",
     },
-    /** Add when available, e.g. "https://www.linkedin.com/in/…" */
-    linkedin: undefined as string | undefined,
+    linkedin: "https://www.linkedin.com/in/raval-manthan-25a672266/" as string | undefined,
   },
 
   /* ── Contact (private by default) ─────────────────────────────────────── */
