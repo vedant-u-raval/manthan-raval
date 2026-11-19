@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowUp, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { navLinks, siteConfig } from "@/lib/site-config";
@@ -82,13 +83,14 @@ export default function Navbar() {
             onClick={() => setOpen(false)}
             className="group flex animate-fade items-center gap-3 font-sans text-[0.78rem] font-semibold uppercase tracking-[0.32em] text-ink"
           >
-            <span
-              aria-hidden="true"
-              className="flex h-8 w-8 items-center justify-center border border-ink font-serif text-[0.95rem] font-medium normal-case tracking-normal transition-colors duration-500 group-hover:bg-ink group-hover:text-white"
-            >
-              {siteConfig.givenName[0]}
-              {siteConfig.familyName[0]}
-            </span>
+            <Image
+              src="/logo.png"
+              alt=""
+              width={191}
+              height={183}
+              preload
+              className="h-9 w-auto transition-transform duration-700 ease-soft group-hover:scale-105 md:h-10"
+            />
             {siteConfig.name}
           </a>
 
