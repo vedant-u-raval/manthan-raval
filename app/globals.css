@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  /* Keep anchored sections clear of the sticky navigation bar. */
+  section[id],
+  main[id] {
+    scroll-margin-top: 4.5rem;
+  }
+
+  ::selection {
+    background: #ece6dd;
+    color: #171717;
+  }
+
+  :focus-visible {
+    outline: 2px solid #171717;
+    outline-offset: 3px;
+  }
+}
+
+/* ── Scroll reveal ────────────────────────────────────────────────────────
+   Elements with [data-reveal] fade/slide in when scrolled into view
+   (see components/RevealObserver.tsx). Only applies when JavaScript is
+   running (.js on <html>), so content is always visible without JS.      */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+    transform 1.1s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+    clip-path 1.4s cubic-bezier(0.76, 0, 0.24, 1) var(--reveal-delay, 0ms);
+  /* Fail-safe: never leave content hidden if the observer does not run. */
+  animation: reveal-failsafe 0s linear 4s forwards;
+}
+.js [data-reveal="fade"] {
+  transform: none;
+}
+.js [data-reveal="image"] {
+  transform: none;
+  clip-path: inset(10% 0 10% 0);
+}
+.js [data-reveal="line"] {
+  opacity: 1;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0 0);
+  animation: none;
+}
+/* Inner image of an image reveal settles from a slight zoom. */
+.js [data-reveal="image"] .reveal-zoom {
+  transform: scale(1.08);
+  transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
+}
+.js [data-reveal="image"].is-visible .reveal-zoom {
+  transform: none;
+}
+@keyframes reveal-failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  .js [data-reveal],
+  .js [data-reveal] .reveal-zoom {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-site px-6 sm:px-8 lg:px-10;
+  }
+
+  .eyebrow {
+    @apply text-[0.7rem] font-medium uppercase tracking-label text-muted;
+  }
+
+  .section-pad {
+    @apply py-24 sm:py-28 lg:py-36;
+  }
+
+  .btn {
+    @apply relative isolate inline-flex items-center justify-center gap-2.5 overflow-hidden px-5 py-4 text-center min-[400px]:whitespace-nowrap text-[0.75rem] font-medium uppercase tracking-[0.14em] transition-colors duration-500 ease-soft sm:px-7 sm:text-[0.78rem] sm:tracking-[0.16em];
+  }
+  /* Sliding fill on hover. */
+  .btn::before {
+    content: "";
+    @apply absolute inset-0 -z-10 origin-right scale-x-0 transition-transform duration-500 ease-curtain;
+  }
+  .btn:hover::before {
+    @apply origin-left scale-x-100;
+  }
+  .btn .btn-icon {
+    @apply transition-transform duration-500 ease-soft;
+  }
+
+  .btn-primary {
+    @apply btn bg-ink text-white;
+  }
+  .btn-primary::before {
+    @apply bg-accent;
+  }
+  .btn-primary:hover .btn-icon {
+    @apply translate-y-0.5;
+  }
+
+  .btn-secondary {
+    @apply btn border border-ink text-ink hover:text-white;
+  }
+  .btn-secondary::before {
+    @apply bg-ink;
+  }
+  .btn-secondary:hover .btn-icon {
+    @apply -translate-y-0.5 translate-x-0.5;
+  }
+
+  .link-underline {
+    @apply bg-[length:0%_1px] bg-left-bottom bg-no-repeat pb-0.5 transition-[background-size,color] duration-500 ease-soft hover:bg-[length:100%_1px];
+    background-image: linear-gradient(currentColor, currentColor);
+  }
+}
