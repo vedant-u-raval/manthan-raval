@@ -90,6 +90,16 @@ export const siteConfig = {
   additionalProfileFields: [] as ProfileField[],
 
   /**
+   * Degrees, shown in the Professional Profile and emitted in structured data
+   * (Person.hasCredential). Add institutions to `alumniOf` below if desired.
+   */
+  education: [
+    { short: "B.Com", full: "Bachelor of Commerce" },
+    { short: "LL.B.", full: "Bachelor of Laws" },
+    { short: "LL.M.", full: "Master of Laws" },
+  ] as { short: string; full: string }[],
+
+  /**
    * Verified schools/universities for structured data (Person.alumniOf).
    * Example: ["Hemchandracharya North Gujarat University"] — only once verified.
    */

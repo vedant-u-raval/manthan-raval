@@ -6,7 +6,7 @@ import { sameAsLinks, siteConfig } from "./site-config";
  * Schema.org JSON-LD for the homepage.
  *
  * Only verified, visible facts are included. Optional fields from
- * site-config (email, phone, alumniOf, knowsAbout) are added only when set.
+ * site-config (email, phone, education, alumniOf, knowsAbout) are added only when set.
  */
 export function buildStructuredData() {
   const personId = `${SITE_URL}/#person`;
@@ -28,7 +28,7 @@ export function buildStructuredData() {
     copyrightNotice: `© ${siteConfig.name}`,
   }));
 
-  const { contact, alumniOf, knowsAbout } = siteConfig;
+  const { contact, alumniOf, knowsAbout, education } = siteConfig;
 
   const person = {
     "@type": "Person",
@@ -54,6 +54,15 @@ export function buildStructuredData() {
       ? { alumniOf: alumniOf.map((name) => ({ "@type": "EducationalOrganization", name })) }
       : {}),
     ...(knowsAbout.length ? { knowsAbout: [...knowsAbout] } : {}),
+    ...(education.length
+      ? {
+          hasCredential: education.map((d) => ({
+            "@type": "EducationalOccupationalCredential",
+            name: `${d.full} (${d.short})`,
+            credentialCategory: "degree",
+          })),
+        }
+      : {}),
   };
 
   const website = {

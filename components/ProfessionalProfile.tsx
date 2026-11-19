@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import SectionHeading from "./SectionHeading";
 import { revealDelay } from "@/lib/motion";
 import { fullLocation, siteConfig, type ProfileField } from "@/lib/site-config";
@@ -6,6 +7,15 @@ export default function ProfessionalProfile() {
   const fields: ProfileField[] = [
     { label: "Full Name", value: siteConfig.name },
     { label: "Profession", value: siteConfig.profession, note: siteConfig.court },
+    ...(siteConfig.education.length
+      ? [
+          {
+            label: "Education",
+            value: siteConfig.education.map((d) => d.short).join(", "),
+            note: siteConfig.education.map((d) => d.full).join(" · "),
+          },
+        ]
+      : []),
     { label: "Location", value: fullLocation },
     ...siteConfig.additionalProfileFields,
   ];
@@ -37,7 +47,15 @@ export default function ProfessionalProfile() {
                 {field.value}
                 {field.note && (
                   <span className="mt-1.5 block font-sans text-[0.78rem] font-medium uppercase tracking-[0.18em] text-muted">
-                    {field.note}
+                    {/* Keep each " · "-separated item on one line so names never split mid-phrase. */}
+                    {field.note.split(" · ").map((part, j, all) => (
+                      <Fragment key={j}>
+                        <span className="whitespace-nowrap">
+                          {part}
+                          {j < all.length - 1 && " ·"}
+                        </span>{" "}
+                      </Fragment>
+                    ))}
                   </span>
                 )}
               </dd>
